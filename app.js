@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5555;
 app.get('/', (req, res) => {
   res.send('Hello World');
 });
-
+/////////////////////////
 app.get('/db-check', async (req, res) => {
   try {
     // const [rows] = await pool.query('SELECT 1 AS test');
