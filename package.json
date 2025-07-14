@@ -1,0 +1,13 @@
+{
+  "name": "nodejs-aurora-app",
+  "version": "1.0.0",
+  "description": "Node.js app with Hello World and MySQL Aurora DB connection",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.9.0"
+  }
+}
