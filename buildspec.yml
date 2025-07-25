@@ -21,7 +21,7 @@ phases:
       - docker push $IMAGE_URI
       # - docker push ${IMAGE_REPO}:latest
       - echo Writing image definitions for ECS...
-      - printf '[{"name":"<ecs-container-name>","imageUri":"%s"}]' $IMAGE_URI > imagedefinitions.json
+      - printf '[{"name":"node-demo","imageUri":"%s"}]' $IMAGE_URI > imagedefinitions.json
 
 artifacts:
   files:
