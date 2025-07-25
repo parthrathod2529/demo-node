@@ -5,14 +5,24 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 039952648966.dkr.ecr.ap-south-1.amazonaws.com
+      - COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | tail -c 11)  # last 10 characters
+      - IMAGE_REPO=039952648966.dkr.ecr.ap-south-1.amazonaws.com/node-demo
+      - IMAGE_URI=${IMAGE_REPO}:${COMMIT_ID}
   build:
     commands:
       - echo Build started on `date`
-      - echo Building the Docker image...
-      - docker build -t node-demo .
-      - docker tag node-demo:latest 039952648966.dkr.ecr.ap-south-1.amazonaws.com/node-demo:latest
+      - echo Building the Docker image with tag $COMMIT_ID...
+      - docker build -t $IMAGE_URI .
+      - docker tag $IMAGE_URI ${IMAGE_REPO}:latest
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo Pushing the Docker image...
-      - docker push 039952648966.dkr.ecr.ap-south-1.amazonaws.com/node-demo:latest
+      - echo Pushing the Docker images...
+      - docker push $IMAGE_URI
+      # - docker push ${IMAGE_REPO}:latest
+      - echo Writing image definitions for ECS...
+      - printf '[{"name":"<ecs-container-name>","imageUri":"%s"}]' $IMAGE_URI > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
