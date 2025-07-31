@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 app.get('/', (req, res) => {
   res.send('Node ECS');
 });
-////////////////////#####################
+////////////////////#####################]]]]]]]]]]]
 app.get('/db-check', async (req, res) => {
   try {
     // const [rows] = await pool.query('SELECT 1 AS test');
